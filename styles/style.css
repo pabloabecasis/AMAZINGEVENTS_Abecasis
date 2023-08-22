@@ -1,13 +1,48 @@
 * {
-    margin:0px;
-    padding:0px;
-    box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+.carousel-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  z-index: 1000;
+}
+
+.carousel-image{
+  background-size: 100%;
+  background-position: 50%;
 }
 
 .carousel-item {
-    height: 30vh;
+  height: 30vh;
 }
 
 .container {
-    padding-top: 1%;
+  padding-top: 1%;
+}
+
+.icon {
+  padding-right: 10px;
+  width: 50px;
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+.card-img {
+  height: 300px;
+  padding-right: 20px;
+  object-fit: cover
+}
+
+
+td {
+  height: 100%;
 }
