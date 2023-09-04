@@ -19,3 +19,4 @@ for (let event of data.events) {
       </div>`;
     cardContainer.innerHTML += card;
 }
+
