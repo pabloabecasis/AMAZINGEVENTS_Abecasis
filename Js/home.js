@@ -12,7 +12,7 @@ for (let event of data.events) {
             <p class="card-text">${event.description}</p>
             <div class="container d-flex justify-content-between">
               <p class="card-text">Price: $${event.price}</p>
-              <a href="details.html" class="btn btn-dark">Description</a>
+              <a href="details.html" class="btn btn-dark" data-id="${event.id}">Description</a>
             </div>
           </div>
         </div>
