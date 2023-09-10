@@ -32,6 +32,13 @@
   width: 50px;
 }
 
+.search-bar {
+  height: 30px;
+}
+.search-btn {
+  height: 30px;
+}
+
 .card-img-top {
   height: 200px;
   object-fit: cover;
