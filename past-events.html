@@ -63,8 +63,9 @@
     </header>
 
     <main>
+      <!-- Carousel -->
       <div class="position-relative">
-        <h3 class="carousel-text">UPCOMING EVENTS</h3>
+        <h3 class="carousel-text">PAST EVENTS</h3>
         <div
           id="carouselExample"
           class="carousel slide"
@@ -142,48 +143,34 @@
             </div>
           </div>
 
-          <!-- <button
-            class="carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselExample"
-            data-bs-slide="prev"
-          >
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button
-            class="carousel-control-next"
-            type="button"
-            data-bs-target="#carouselExample"
-            data-bs-slide="next"
-          >
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button> -->
+
         </div>
       </div>
-
+      <!-- Checkboxes - Search Bar -->
       <div class="container d-flex mb-4">
         <div
           class="container d-flex justify-content-start flex-wrap"
-          id="checkboxesContainer"
+          id="checkboxContainer"
         ></div>
 
         <form class="d-flex justify-content-end">
           <input
-            class="form-control me-2"
+            class="search-bar form-control me-2"
             type="search"
             placeholder="Search"
             aria-label="Search"
+            id="searchInput"
           />
-          <button class="btn btn-outline-dark" type="submit">Search</button>
+          <button class="search-btn btn btn-outline-dark" id="searchBtn" type="submit">
+            Search
+          </button>
         </form>
       </div>
-
+      <!-- Cards -->
       <div class="container-fluid">
         <div
-          class="d-flex flex-wrap justify-content-center gap-2"
-          id="upcomingCardContainer"
+          class=" d-flex justify-content-center flex-wrap gap-2"
+          id="pastCardContainer"
         ></div>
       </div>
     </main>
