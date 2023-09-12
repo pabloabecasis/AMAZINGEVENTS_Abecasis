@@ -41,7 +41,7 @@ function createCard(event) {
         <p class="card-text">${event.description}</p>
         <div class="container d-flex justify-content-between">
           <p class="card-text">Price: $${event.price}</p>
-          <a href="details.html?id=${event.id}" class="btn btn-dark">Description</a>
+          <a href="details.html?id=${event._id}" class="btn btn-dark">Description</a>
         </div>
       </div>
     </div>
