@@ -56,7 +56,7 @@ export const data = {
         estimate: 8200,
         price: 3500,
         __v: 0,
-      },
+      }, 
       {
         id: "639c723c992482e5f2834bf1",
         name: "Comicon",
