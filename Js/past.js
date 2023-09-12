@@ -1,18 +1,36 @@
-import { data } from "./data.js";
 
-// ------ Obtain categories ------
+const pastCardContainer = document.getElementById("pastCardContainer");
+const searchInput = document.getElementById("searchInput");
+const searchBtn = document.getElementById("searchBtn");
+
+
+function performSearch() {
+  const searchTerm = searchInput.value.toLowerCase();
+  const cards = document.querySelectorAll(".card");
+
+  cards.forEach((card)=> {
+    const cardTitle = card.querySelector(".card-title").textContent.toLowerCase();
+    const cardDescription = card.querySelector(".card-text").textContent.toLowerCase();
+
+    if (searchTerm === "") {
+      card.style.display = "block";
+    } else if (cardTitle.includes(searchTerm) || cardDescription.includes(searchTerm)) {
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
+    }
+  });
+}
+
 function obtainCategories(events) {
-    const uniqueCategories = [];
-    events.forEach((event) => {
-      if (!uniqueCategories.includes(event.category)) {
-        uniqueCategories.push(event.category);
-      }
-    });
-    return uniqueCategories;
-  }
-
-// ------ Card Create ------
-let pastCardContainer = document.getElementById("pastCardContainer");
+  const uniqueCategories = [];
+  events.forEach((event) => {
+    if (!uniqueCategories.includes(event.category)) {
+      uniqueCategories.push(event.category);
+    }
+  });
+  return uniqueCategories;
+}
 
 function createCard(event) {
   let card = `
@@ -31,22 +49,13 @@ function createCard(event) {
   pastCardContainer.innerHTML += card;
 }
 
-// ------ Show Cards ------
-function showAllCards() {
-    const cards = document.querySelectorAll(".card");
-    cards.forEach((card) => {
-      card.style.display = "block";
-    });
-  }
-
-// ------ Card Filter ------
 function filterCardsByCategory() {
+  const cards = document.querySelectorAll(".card");
   const checkboxes = document.querySelectorAll(".form-check-input");
   const selectedCategories = Array.from(checkboxes)
     .filter((checkbox) => checkbox.checked)
     .map((checkbox) => checkbox.getAttribute("data-category"));
 
-  const cards = document.querySelectorAll(".card");
   cards.forEach((card) => {
     const category = card.getAttribute("data-category");
     if (selectedCategories.length === 0 || selectedCategories.includes(category)) {
@@ -57,7 +66,6 @@ function filterCardsByCategory() {
   });
 }
 
-//------ Create Checkboxes ------
 function createCheckbox(events) {
   const uniqueCategories = obtainCategories(events);
   const checkboxContainer = document.getElementById("checkboxContainer");
@@ -77,7 +85,6 @@ function createCheckbox(events) {
     checkboxContainer.innerHTML += checkbox;
   });
 
-  // ------ Event Listener ------
   const checkboxes = document.querySelectorAll(".form-check-input");
   checkboxes.forEach((checkbox) => {
     checkbox.addEventListener("change", () => {
@@ -86,26 +93,15 @@ function createCheckbox(events) {
   });
 }
 
-
-createCheckbox(data.events);
-
-showAllCards();
-
-for (let event of data.events) {
-  if (event.date < data.currentDate) {
-    createCard(event);
-  }
+function createCards (events){
+  events.forEach((event) => {
+    createCard(event); 
+  });
 }
 
 
-//------ Search Bar -------
-
-const searchInput = document.getElementById("searchInput");
-const searchBtn = document.getElementById("searchBtn");
-
-// .... event listener
 searchBtn.addEventListener("click", function (event) {
-  event.preventDefault(); 
+  event.preventDefault();
   performSearch();
 });
 
@@ -116,20 +112,31 @@ searchInput.addEventListener("keyup", function (event) {
   }
 });
 
-function performSearch() {
-  const searchTerm = searchInput.value.toLowerCase();
-  const cards = document.querySelectorAll(".card");
+// ------ Import Data  from API ------
+function obtainDataFromAPI() {
+  fetch('https://mindhub-xj03.onrender.com/api/amazing')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error para acceder a la informacion');
+      }
+      return response.json();
+    })
+    .then(data => {
+      const currentDate = new Date();
+      const pastEvents = data.events.filter(event => new Date(event.date) < currentDate);
 
-  cards.forEach(function (card) {
-    const cardTitle = card.querySelector(".card-title").textContent.toLowerCase();
-    const cardDescription = card.querySelector(".card-text").textContent.toLowerCase();
-
-    if (searchTerm === "") {
-      card.style.display = "block";
-    } else if (cardTitle.includes(searchTerm) || cardDescription.includes(searchTerm)) {
-      card.style.display = "block"; 
-    } else {
-      card.style.display = "none"; 
-    }
-  });
+      createCheckbox(pastEvents);
+      createCards(pastEvents);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
 }
+
+
+obtainDataFromAPI();
+
+
+
+
+

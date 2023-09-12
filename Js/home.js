@@ -4,7 +4,6 @@ const searchInput = document.getElementById("searchInput");
 const searchBtn = document.getElementById("searchBtn");
 
 
-
 function performSearch() {
   const searchTerm = searchInput.value.toLowerCase();
   const cards = document.querySelectorAll(".card");
@@ -100,6 +99,20 @@ function createCards (events){
   });
 }
 
+
+searchBtn.addEventListener("click", function (event) {
+  event.preventDefault();
+  performSearch();
+});
+
+searchInput.addEventListener("keyup", function (event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    performSearch();
+  }
+});
+
+// ------ Import Data  from API ------
 function obtainDataFromAPI() {
   fetch('https://mindhub-xj03.onrender.com/api/amazing')
     .then(response => {
@@ -116,20 +129,6 @@ function obtainDataFromAPI() {
       console.error('Error:', error);
     });
 }
-
-
-
-searchBtn.addEventListener("click", function (event) {
-  event.preventDefault();
-  performSearch();
-});
-
-searchInput.addEventListener("keyup", function (event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    performSearch();
-  }
-});
 
 
 obtainDataFromAPI();
