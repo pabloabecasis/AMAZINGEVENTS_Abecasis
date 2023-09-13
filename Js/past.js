@@ -4,21 +4,50 @@ const searchInput = document.getElementById("searchInput");
 const searchBtn = document.getElementById("searchBtn");
 
 
-function performSearch() {
-  const searchTerm = searchInput.value.toLowerCase();
+function filterCars(){
   const cards = document.querySelectorAll(".card");
+  const checkboxes = document.querySelectorAll(".form-check-input");
+  const searchTerm = searchInput.value.toLowerCase();
+  const selectedCategories = Array.from(checkboxes)
+  .filter((checkbox) => checkbox.checked)
+  .map((checkbox) => checkbox.getAttribute("data-category"));
+
+  const searchByText =  searchTerm !== ""
+  const hasSearchBoxSelected = selectedCategories.length !== 0
 
   cards.forEach((card)=> {
-    const cardTitle = card.querySelector(".card-title").textContent.toLowerCase();
-    const cardDescription = card.querySelector(".card-text").textContent.toLowerCase();
+      const cardTitle = card.querySelector(".card-title").textContent.toLowerCase();
+      const cardDescription = card.querySelector(".card-text").textContent.toLowerCase();
+      const category = card.getAttribute("data-category");
+      
+      if(!searchByText && !hasSearchBoxSelected ){
+      card.style.display = "block";
+      } 
+      else if(searchByText && !hasSearchBoxSelected ){ 
+      if (cardTitle.includes(searchTerm) || cardDescription.includes(searchTerm)) {
+          card.style.display = "block";
+      } else {
+          card.style.display = "none";
+      } 
 
-    if (searchTerm === "") {
-      card.style.display = "block";
-    } else if (cardTitle.includes(searchTerm) || cardDescription.includes(searchTerm)) {
-      card.style.display = "block";
-    } else {
-      card.style.display = "none";
-    }
+
+      } else if (!searchByText && hasSearchBoxSelected ){
+
+      if (selectedCategories.includes(category)) {
+          card.style.display = "block";
+      } else {
+          card.style.display = "none";
+      }
+
+      } else {
+
+      if ((cardTitle.includes(searchTerm) || cardDescription.includes(searchTerm)) && selectedCategories.includes(category)) {
+          card.style.display = "block";
+      } else {
+          card.style.display = "none";
+      }
+
+      }
   });
 }
 
@@ -102,13 +131,13 @@ function createCards (events){
 
 searchBtn.addEventListener("click", function (event) {
   event.preventDefault();
-  performSearch();
-});
+  filterCars();
+  });
 
-searchInput.addEventListener("keyup", function (event) {
+  searchInput.addEventListener("keyup", function (event) {
   if (event.key === "Enter") {
     event.preventDefault();
-    performSearch();
+    filterCars();
   }
 });
 

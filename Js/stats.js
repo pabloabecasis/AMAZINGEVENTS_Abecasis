@@ -45,9 +45,6 @@ console.log({allEventsStatisticsArray})
 
 
 
-
-
-
 //------ Import Data from APi ------
 fetch('https://mindhub-xj03.onrender.com/api/amazing').then((promesaSolved)=> promesaSolved.json()).then((res)=>{
 infoTable(res.events, res.currentDate)
