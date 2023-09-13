@@ -3,7 +3,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const eventId = urlParams.get("id");
 console.log({ eventId });
 
-// Función para obtener los datos de un evento desde la API
+// ------ Get Data Function------
 function fetchEventData(eventId) {
   return fetch(`https://mindhub-xj03.onrender.com/api/amazing`)
     .then((response) => {
@@ -15,13 +15,13 @@ function fetchEventData(eventId) {
     .then((data) => {
       const event = data.events.find((e) => e._id === parseInt(eventId));
       if (!event) {
-        throw new Error(`No se encontró un evento con el ID ${eventId}`);
+        throw new Error(`Error al obtener los datos del evento`);
       }
       return event;
     });
 }
 
-// Función para crear y mostrar la tarjeta del evento
+// ------ Create Card ------
 function showEventDetails(event) {
   const card = `
     <div class="card mb-4 d-flex">
@@ -41,7 +41,7 @@ function showEventDetails(event) {
   eventDetailsContainer.innerHTML = card;
 }
 
-// ------ Import Data from api ------
+// ------ function  Call ------
 fetchEventData(eventId)
   .then((event) => {
     showEventDetails(event);
